@@ -7,10 +7,10 @@ import {
   SettingsOutlined,
   ArrowDropDownOutlined,
 } from "@mui/icons-material";
-import FlexBetween from "../../components/FlexBetween";
-// import { useDispatch } from "react-redux";
-// import { setMode } from "state";
-// import profileImage from "assets/profile.jpeg";
+import FlexBetween from "components/FlexBetween";
+import { useDispatch } from "react-redux";
+import { setMode } from "state";
+import profileImage from "assets/dragon.png";
 import {
   AppBar,
   Button,
@@ -25,7 +25,7 @@ import {
 } from "@mui/material";
 
 const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const theme = useTheme();
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -62,8 +62,7 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
 
         {/* RIGHT SIDE */}
         <FlexBetween gap="1.5rem">
-          {/* <IconButton onClick={() => dispatch(setMode())}> */}
-          <IconButton onClick={() => console.log("click")}>
+          <IconButton onClick={() => dispatch(setMode())}>
             {theme.palette.mode === "dark" ? (
               <DarkModeOutlined sx={{ fontSize: "25px" }} />
             ) : (
@@ -88,7 +87,7 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
               <Box
                 component="img"
                 alt="profile"
-                // src={profileImage}
+                src={profileImage}
                 height="32px"
                 width="32px"
                 borderRadius="50%"
@@ -100,13 +99,13 @@ const Navbar = ({ user, isSidebarOpen, setIsSidebarOpen }) => {
                   fontSize="0.85rem"
                   sx={{ color: theme.palette.secondary[100] }}
                 >
-                  Les Goh
+                  {user.name}
                 </Typography>
                 <Typography
                   fontSize="0.75rem"
                   sx={{ color: theme.palette.secondary[200] }}
                 >
-                  DM
+                  {user.occupation}
                 </Typography>
               </Box>
               <ArrowDropDownOutlined

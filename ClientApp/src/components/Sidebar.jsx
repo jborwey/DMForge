@@ -30,8 +30,8 @@ import {
 } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import FlexBetween from '../../components/FlexBetween'
-// import profileImage from "assets/profile.jpeg";
+import FlexBetween from "./FlexBetween";
+import profileImage from "assets/dragon.png";
 
 const navItems = [
   {
@@ -43,6 +43,10 @@ const navItems = [
     icon: null,
   },
   {
+    text: "Items",
+    icon: <ShoppingCartOutlined />,
+  },
+  {
     text: "People",
     icon: <Groups2Outlined />,
   },
@@ -51,34 +55,29 @@ const navItems = [
     icon: <PublicOutlined />,
   },
   {
-    text: "Things",
-    icon: <ShoppingCartOutlined />,
-  },
-  {
     text: "Threads",
     icon: <ReceiptLongOutlined />,
   },
-
   {
-    text: "Create",
+    text: "Forge",
     icon: null,
   },
   {
-    text: "DM Forge",
+    text: "Overview",
+    icon: <PointOfSaleOutlined />,
+  },
+  {
+    text: "Daily",
     icon: <TodayOutlined />,
   },
-  // {
-  //   text: "Daily",
-  //   icon: <PointOfSaleOutlined />,
-  // },
-  // {
-  //   text: "Monthly",
-  //   icon: <CalendarMonthOutlined />,
-  // },
-  // {
-  //   text: "Breakdown",
-  //   icon: <PieChartOutlined />,
-  // },
+  {
+    text: "Monthly",
+    icon: <CalendarMonthOutlined />,
+  },
+  {
+    text: "Breakdown",
+    icon: <PieChartOutlined />,
+  },
   {
     text: "Management",
     icon: null,
@@ -133,7 +132,7 @@ const Sidebar = ({
               <FlexBetween color={theme.palette.secondary.main}>
                 <Box display="flex" alignItems="center" gap="0.5rem">
                   <Typography variant="h4" fontWeight="bold">
-                    DMBuddy
+                    DM FORGE
                   </Typography>
                 </Box>
                 {!isNonMobile && (
@@ -200,7 +199,7 @@ const Sidebar = ({
               <Box
                 component="img"
                 alt="profile"
-                // src={profileImage}
+                src={profileImage}
                 height="40px"
                 width="40px"
                 borderRadius="50%"

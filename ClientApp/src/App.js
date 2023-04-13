@@ -1,22 +1,30 @@
 import React, { Component } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
+import { useMemo } from "react";
+import { useSelector } from "react-redux";
+import { Route, Routes, Navigate } from 'react-router-dom';
+import { themeSettings } from "./theme";
 import AppRoutes from './AppRoutes';
-import { Layout } from './components/Layout';
-import './custom.css';
+import Layout from "scenes/layout";
+import Dashboard from "./scenes/dashboard";
 
-export default class App extends Component {
-  static displayName = App.name;
-
-  render() {
+function App() {
+  const mode = useSelector((state) => state.global.mode);
+  const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
     return (
-      <Layout>
-        <Routes>
-          {AppRoutes.map((route, index) => {
-            const { element, ...rest } = route;
-            return <Route key={index} {...rest} element={element} />;
-          })}
-        </Routes>
-      </Layout>
-    );
-  }
+      <div className="app">
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+            <Routes>
+              <Route element={<Layout />} >
+                <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+              </Route>
+            </Routes>
+        </ThemeProvider>
+      </div>
+  );
 }
+
+export default App;
