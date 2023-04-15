@@ -8,6 +8,7 @@ import { themeSettings } from "./theme";
 import AppRoutes from './AppRoutes';
 import Layout from "scenes/layout";
 import Dashboard from "./scenes/dashboard";
+import Items from "scenes/items";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -20,6 +21,7 @@ function App() {
               <Route element={<Layout />} >
                 <Route path="/" element={<Navigate to="/dashboard" replace />} />
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/items" element={<Items />} />
               </Route>
             </Routes>
         </ThemeProvider>
