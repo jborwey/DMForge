@@ -8,6 +8,7 @@ import { themeSettings } from "./theme";
 import AppRoutes from './AppRoutes';
 import Layout from "scenes/layout";
 import Dashboard from "./scenes/dashboard";
+import People from "scenes/people";
 import Items from "scenes/items";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
               <Route element={<Layout />} >
                 <Route path="/" element={<Navigate to="/dashboard" replace />} />
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/people" element={<People />} />
                 <Route path="/items" element={<Items />} />
               </Route>
             </Routes>

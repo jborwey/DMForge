@@ -7,12 +7,8 @@ namespace DMForge.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class GenerateItemController : ControllerBase
+    public class GenerateNpcController : ControllerBase
     {
-        public class ItemRequest
-        {
-            public string ItemType { get; set; }
-        }
         // Multiline system prompt for the generative model
         // TODO: Replace this with a templated item generator
         private const string SystemPrompt = @"You are a creative tabletop game content assistant. You will help users by generating interesting items in the Fantasy table top game Dungeons and Dragons. You have creative license to come up new characters, places, content, etc. for the game.
@@ -29,10 +25,9 @@ Each item is described with:
             ApiKey = @"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"
         });
 
-
         // GET generateitem
-        [HttpPost]
-        public async Task<IActionResult> GetGeneratedItem([FromBody] ItemRequest item)
+        [HttpGet]
+        public async Task<IActionResult> GetGeneratedItem()
         {
             _logger.LogInformation("Generating item, sending request to OpenAI");
             var completionResult = await openAiService.ChatCompletion.CreateCompletion(
@@ -41,7 +36,7 @@ Each item is described with:
                     Messages = new List<ChatMessage>
                 {
                     ChatMessage.FromSystem(SystemPrompt),
-                    ChatMessage.FromUser("Can you generate me a " + item.ItemType + "?"),
+                    ChatMessage.FromUser("Can you generate me a sword?"),
                 },
                     Model = "gpt-4",
                     MaxTokens = 1000//optional
@@ -53,8 +48,8 @@ Each item is described with:
             }
             return Ok(new
             {
-                name = item.ItemType,
-                description = "A " + item.ItemType,
+                name = "Sword",
+                description = "A sword",
                 weight = 2,
                 value = 10,
                 type = "weapon",
