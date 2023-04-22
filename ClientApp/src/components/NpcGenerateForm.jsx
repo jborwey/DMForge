@@ -14,6 +14,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import InfoWidget from './info/InfoWidget';
 
 const NpcGenerateForm = ({ }) => {
     const theme = useTheme();
@@ -84,24 +85,27 @@ const NpcGenerateForm = ({ }) => {
             autoComplete="off"
         >
             <div>
-                <FormControl>
-                    <InputLabel id="race-type-label">Race</InputLabel>
-                    <Select
-                        labelId="race-type-label"
-                        name="Race"
-                        value={raceOption}
-                        label="Race"
-                        onChange={handleRaceChange}
-                        disabled={isLoading}
-                    >
-                        <MenuItem value={''}></MenuItem>
-                        <MenuItem value={'Human'}>Human</MenuItem>
-                        <MenuItem value={'Elf'}>Elf</MenuItem>
-                        <MenuItem value={'Drow'}>Drow</MenuItem>
-                        <MenuItem value={'Dwarf'}>Dwarf</MenuItem>
-                        <MenuItem value={'Tiefling'}>Tiefling</MenuItem>
-                    </Select>
-                </FormControl>
+                <Box display="inline-flex" alignContent="center">
+                    <FormControl>
+                        <InputLabel id="race-type-label">Race</InputLabel>
+                        <Select
+                            labelId="race-type-label"
+                            name="Race"
+                            value={raceOption}
+                            label="Race"
+                            onChange={handleRaceChange}
+                            disabled={isLoading}
+                        >
+                            <MenuItem value={''}></MenuItem>
+                            <MenuItem value={'Human'}>Human</MenuItem>
+                            <MenuItem value={'Elf'}>Elf</MenuItem>
+                            <MenuItem value={'Drow'}>Drow</MenuItem>
+                            <MenuItem value={'Dwarf'}>Dwarf</MenuItem>
+                            <MenuItem value={'Tiefling'}>Tiefling</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <InfoWidget infoText={'Select the race of the NPC you want to create. Leave this blank if you want The Forge to decide.'} />
+                </Box>
                 <Box sx={{ '& #lengthtracker': { marginBottom: 1, marginLeft: 1, marginRight: 1, display: 'block', width: '25ch' }, }}>
                     <TextField
                         inputProps={{ maxLength: maxlengthRace }}
@@ -112,6 +116,7 @@ const NpcGenerateForm = ({ }) => {
                         value={profInput}
                         onChange={handleProfessionChange}
                     />
+                    <InfoWidget infoText={'Select the profession of the NPC you want to create. Leave this blank if you want The Forge to decide.'} />
                     <span id='lengthtracker'>
                         {maxlengthRace - profInput.length}/{maxlengthRace}
                     </span>

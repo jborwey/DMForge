@@ -7,7 +7,7 @@ const People = () => {
   return (
     <Box
       sx={{ paddingLeft: "2rem" }}>
-      <Header title="PEOPLE" subtitle="See the list of important character's and generate new ones" />
+      <Header title="PEOPLE" subtitle="See the list of important characters and generate new ones" />
       <NpcGenerateForm />
     </Box>
   );
