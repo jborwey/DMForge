@@ -43,7 +43,7 @@ Each item is described with:
                     ChatMessage.FromSystem(SystemPrompt),
                     ChatMessage.FromUser("Can you generate me a " + item.ItemType + "?"),
                 },
-                    Model = "gpt-4",
+                    Model = "gpt-3.5-turbo",
                     MaxTokens = 1000//optional
                 });
             var completion_result = completionResult.Choices.First().Message.Content;
