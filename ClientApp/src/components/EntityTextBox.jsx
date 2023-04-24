@@ -51,6 +51,7 @@ const EntityTextBox = ({ }) => {
           }       
         } catch (error) {
           console.error('Error fetching item text:', error);
+          setIsLoading(false);
         }
       };
 
