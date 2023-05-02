@@ -10,6 +10,7 @@ import Layout from "scenes/layout";
 import Dashboard from "./scenes/dashboard";
 import People from "scenes/people";
 import Items from "scenes/items";
+import Threads from "scenes/threads"
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -24,6 +25,7 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/people" element={<People />} />
                 <Route path="/items" element={<Items />} />
+                <Route path="/threads" element={<Threads />} />
               </Route>
             </Routes>
         </ThemeProvider>
