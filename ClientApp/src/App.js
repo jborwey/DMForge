@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { themeSettings } from "./theme";
-import { GoogleLogin } from 'react-google-login';
+import { GoogleLogin } from '@react-oauth/google';
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import AppRoutes from './AppRoutes';
 import SplashScreen from 'scenes/splash';
@@ -15,7 +15,8 @@ import Layout from "scenes/layout";
 import Dashboard from "./scenes/dashboard";
 import People from "scenes/people";
 import Items from "scenes/items";
-import Threads from "scenes/threads"
+import Threads from "scenes/threads";
+import GoogleLoginComponent from "components/GoogleLogin";
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -25,11 +26,16 @@ function App() {
   const [profile, setProfile] = useState([]);
 
   const handleAuthentication = (authenticated) => {
+    console.log("handle auth")
     setIsAuthenticated(authenticated);
   };
 
   const login = useGoogleLogin({
-    onSuccess: (codeResponse) => setUser(codeResponse),
+    onSuccess: (codeResponse) => {
+      setUser(codeResponse);
+      setProfile(codeResponse.profileObj);
+      handleAuthentication(true);
+    },
     onError: (error) => console.log('Login Failed:', error)
   });
 
@@ -49,20 +55,19 @@ function App() {
             </Routes>
           ) : (
             <Routes>
-              <Route path="/" element={<SplashScreen />} />
-              <Route
-                path="/login"
-                element={<Login onAuthentication={handleAuthentication} />}
-              />
-              <Route
-                path="/register"
-                element={<Register onAuthentication={handleAuthentication} />}
-              />
-              <Route
-                path="/googlogin"
-                element={<GoogleLogin onAuthentication={handleAuthentication} />}
-              />         
-              <Route path="*" element={<Navigate to="/" replace />} />
+              <Route path="/" element={<SplashScreen />} >
+                <Route
+                  path="/login"
+                  element={<Login onAuthentication={handleAuthentication} />}
+                />
+                <Route
+                  path="/register"
+                  element={<Register onAuthentication={handleAuthentication} />}
+                />
+                <Route
+                  element={<GoogleLoginComponent onAuthentication={handleAuthentication} />}
+                />    
+              </Route>
             </Routes>
           )}
         </ThemeProvider>

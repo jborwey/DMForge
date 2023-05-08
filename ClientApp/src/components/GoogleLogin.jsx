@@ -1,19 +1,27 @@
-import React from 'react';
-import { GoogleLogin } from 'react-google-login';
+import React, { useState } from 'react';
+import { GoogleLogin } from '@react-oauth/google';
+import { Navigate } from 'react-router-dom';
 
 const clientId = '889072890550-v5nbgtju1ua5vg7q5hbdv8fraph0uk8r.apps.googleusercontent.com';
 
-const onSuccess = (response) => {
-  // Send the 'response.tokenId' to your C# backend for validation and user authentication
-  console.log("google login success", response);
-};
+const GoogleLoginComponent = ({ onAuthentication }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
+  const onSuccess = (response) => {
+    console.log("google login success", response);
+    if (typeof onAuthentication === 'function') {
+      onAuthentication(true);
+    }
+  };
 
-const onFailure = (response) => {
-  // Handle login failure
-  console.log("google login failure", response);
-};
+  const onFailure = (response) => {
+    // Handle login failure
+    console.log("google login failure", response);
+    if (typeof onAuthentication === 'function') {
+      onAuthentication(false);
+    }
+  };
 
-const GoogleLoginComponent = () => {
   return (
     <div>
       <GoogleLogin
