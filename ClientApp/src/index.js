@@ -8,6 +8,7 @@ import reportWebVitals from './reportWebVitals';
 import { configureStore } from "@reduxjs/toolkit";
 import globalReducer from "./state";
 import { Provider } from "react-redux";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 const rootElement = document.getElementById('root');
@@ -21,11 +22,13 @@ const store = configureStore({
 });
 
 root.render(
-  <BrowserRouter basename={baseUrl}>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </BrowserRouter>);
+  <GoogleOAuthProvider clientId="889072890550-v5nbgtju1ua5vg7q5hbdv8fraph0uk8r.apps.googleusercontent.com">
+    <BrowserRouter basename={baseUrl}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </BrowserRouter>
+  </GoogleOAuthProvider >);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

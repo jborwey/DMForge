@@ -1,11 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { themeSettings } from "./theme";
+import { GoogleLogin } from 'react-google-login';
+import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import AppRoutes from './AppRoutes';
+import SplashScreen from 'scenes/splash';
+import Login from 'components/Login';
+import Register from 'components/Register';
 import Layout from "scenes/layout";
 import Dashboard from "./scenes/dashboard";
 import People from "scenes/people";
@@ -15,10 +20,24 @@ import Threads from "scenes/threads"
 function App() {
   const mode = useSelector((state) => state.global.mode);
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
-    return (
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState([]);
+  const [profile, setProfile] = useState([]);
+
+  const handleAuthentication = (authenticated) => {
+    setIsAuthenticated(authenticated);
+  };
+
+  const login = useGoogleLogin({
+    onSuccess: (codeResponse) => setUser(codeResponse),
+    onError: (error) => console.log('Login Failed:', error)
+  });
+
+  return (
       <div className="app">
         <ThemeProvider theme={theme}>
           <CssBaseline />
+          {isAuthenticated ? (
             <Routes>
               <Route element={<Layout />} >
                 <Route path="/" element={<Navigate to="/dashboard" replace />} />
@@ -28,6 +47,24 @@ function App() {
                 <Route path="/threads" element={<Threads />} />
               </Route>
             </Routes>
+          ) : (
+            <Routes>
+              <Route path="/" element={<SplashScreen />} />
+              <Route
+                path="/login"
+                element={<Login onAuthentication={handleAuthentication} />}
+              />
+              <Route
+                path="/register"
+                element={<Register onAuthentication={handleAuthentication} />}
+              />
+              <Route
+                path="/googlogin"
+                element={<GoogleLogin onAuthentication={handleAuthentication} />}
+              />         
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          )}
         </ThemeProvider>
       </div>
   );
